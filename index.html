@@ -11,10 +11,10 @@
         function receiveMessage(event)
         {
             //check its aris trusted then we ignore.
-            /*
-            if (event.origin !== "aritx-external")
+            
+            if (event.origin !== "http://localhost:59675")
             return;
-            */
+            
             console.log("receiveMessage-github", event);
             try {
                 let json = JSON.parse(event.data);
