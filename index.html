@@ -20,11 +20,13 @@
                 let json = JSON.parse(event.data);
                 if (json.save != null) {
                     let obj = json.save
+                    console.log("save cookie:", obj);
                     // do something
                 }
 
                 if (json.read != null) {
                     let obj = json.read
+                    console.log("read cookie:", obj);
                     // do something
                 }
 
