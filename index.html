@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>iFrame PostMessage Test Reciever</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="iFrame PostMessage Test" />
+    <script>
+        window.addEventListener("message", receiveMessage, false);
+        function receiveMessage(event)
+        {
+            console.log("receiveMessage", event);
+            //check its aris trusted then we ignore.
+            /*
+            if (event.origin !== "aritx-external")
+            return;
+            */
+            try {
+                let json = JSON.parse(event.data);
+                if (json.save != null) {
+                    let obj = json.save
+                    // do something
+                }
+
+                if (json.read != null) {
+                    let obj = json.read
+                    // do something
+                }
+
+            } catch (err) {
+                console.log("error", err);
+
+            }
+
+          //check we want to send an OK response
+          event.source.postMessage("OK",event.origin);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="iframed-recieveMessage" class="section">IFrame Reciever</div>
+</body>
+
+</html>
