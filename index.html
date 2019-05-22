@@ -21,23 +21,19 @@
                 if (json.save != null) {
                     let obj = json.save
                     console.log("save cookie:", obj);
-                    // do something
+                    document.cookie = obj;
                 }
 
-                if (json.read != null) {
-                    let obj = json.read
-                    console.log("read cookie:", obj);
-                    // do something
+                if (json.fetch != null) {
+                    console.log("fetch cookie:", obj);
+                    let response = {"data": document.cookie};
+                     event.source.postMessage(JSON.stringify(response), event.origin);       
                 }
-
             } catch (err) {
                 console.log("error", err);
-
             }
 
-          //check we want to send an OK response
-          event.source.postMessage("OK", event.origin);
-        }
+        }      
     </script>
 </head>
 
