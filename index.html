@@ -15,17 +15,17 @@
             if (event.origin !== "http://localhost:59675")
             return;
             
-            console.log("receiveMessage-github", event);
+            console.log("external-site:receiveMessage", event);
             try {
                 let json = JSON.parse(event.data);
                 if (json.save != null) {
                     let obj = json.save
-                    console.log("save cookie:", obj);
+                    console.log("external-site:save-cookie:", obj);
                     document.cookie = obj;
                 }
 
                 if (json.fetch != null) {
-                    console.log("fetch cookie:", obj);
+                    console.log("external-site:fetch-cookie", obj);
                     let response = {"data": document.cookie};
                      event.source.postMessage(JSON.stringify(response), event.origin);       
                 }
