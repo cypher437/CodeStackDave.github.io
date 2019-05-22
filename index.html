@@ -26,7 +26,8 @@
 
                 if (json.fetch != null) {
                     console.log("external-site:fetch-cookie", json);
-                    let response = {"cookie": document.cookie.split(';')};                  
+                    let data = document.cookie.split(";");
+                    let response = {"cookie": data};                  
                      event.source.postMessage(JSON.stringify(response), event.origin);       
                 }
             } catch (err) {
