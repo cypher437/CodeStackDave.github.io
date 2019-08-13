@@ -29,15 +29,14 @@
         // Send a message to the parent
         var sendMessage = function (msg) {
             // Make sure you are sending a string, and to stringify JSON
-            console.log("child sent", event.origin, " windowparent: ", window.parent.origin, "windowOrigin: ", window.origin);
-            window.parent.postMessage(msg, '*');
+            window.parent.postMessage(msg + event.origin + window.parent.origin + window.origin, '*');
         };
         var results = document.getElementById('results'),
             messageButton = document.getElementById('message_button');
         // Listen to messages from parent window
         bindEvent(window, 'message', function (e) {
-            results.innerHTML = e.data;
-            console.log("child sent", event.origin, " windowparent: ", window.parent.origin, "windowOrigin: ", window.origin);
+            results.innerHTML = e.data + e.origin + ":" + e.parent.origin + ":" + e.window.origin;
+            console.log("child sent", e.origin, " windowparent: ", e.parent.origin, "windowOrigin: ", e.window.origin);
         });
         // Send random message data on every button click
         bindEvent(messageButton, 'click', function (e) {
