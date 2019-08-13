@@ -5,12 +5,12 @@
 </head>
 <body>
 
-<button>Botão</button>
+<button>Send Message</button>
 
 <script type="text/javascript">
 	document.querySelector('button').onclick = function () {
 		// parent.postMessage("message to be sent", "http://the-website-that-will-receive-the-msg.com")
-		parent.postMessage("myevent", "*")
+		parent.postMessage("MyMessage", "*")
 	};
 </script>
 
