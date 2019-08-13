@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>iFrame Test Receiver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="iFrame PostMessage Test" />
+    <script>
+        window.addEventListener("message", receiveMessage, false);
+        function receiveMessage(event)
+        {
+
+            try {
+                let json = JSON.parse(event.data);
+                if (json.name === "loadCookieResponse") {
+                    logMessage(json)
+                } else {
+                    document.getElementById("output").value += "\n<<< ERROR: Recieved unexpected response" + JSON.stringify(json);
+                }
+            } catch (e) {
+                document.getElementById("output").value += "\n***ERROR*** " + e
+            }
+        };
+
+        function resetCookie(event) {
+            let save_json = {name:"saveCookie", payload: ""};
+            window.parent.postMessage(JSON.stringify(save_json), window.origin);
+            logMessage(save_json);
+        }
+        function saveCookie(event) {
+            let string = randomString(40)
+            let save_json = {name:"saveCookie", payload: string};
+            window.parent.postMessage(JSON.stringify(save_json), window.origin);
+            logMessage(save_json);
+        }
+
+        function readCookie(event) {
+            let read_json = {name:"loadCookie", payload: ""};
+            window.parent.postMessage(JSON.stringify(read_json), window.origin);
+            logMessage(read_json);
+        }
+        function testError(event) {
+            let malformed_json = {name:"garbage"};
+            window.parent.postMessage(JSON.stringify(malformed_json), window.origin);
+            logMessage(malformed_json);
+        }
+
+        function logMessage(message) {
+            let json = message
+
+            if (typeof message !== 'object')
+                json = JSON.parse(message);
+
+            if (json.name === null || json.payload === null){
+                document.getElementById("output").value += "\nERROR: message is malformed " + JSON.stringify(json);
+                return;
+            }
+
+            if (json.name === "loadCookieResponse" || json.name === "saveCookieResponse" ){
+                document.getElementById("output").value += "\n<<< " + JSON.stringify(json);
+                return;
+            }
+
+            if (json.name === "saveCookie" || json.name === "loadCookie"){
+                document.getElementById("output").value += "\n>>> " + JSON.stringify(json);
+                return;
+            }
+
+            document.getElementById("output").value += "\n>>> ERROR: unexpected message" + JSON.stringify(json);
+        }
+
+        function randomString(length) {
+           var result           = '';
+           var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+           var charactersLength = characters.length;
+           for ( var i = 0; i < length; i++ ) {
+              result += characters.charAt(Math.floor(Math.random() * charactersLength));
+           }
+           return result;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="iframed-recieveMessage" class="section">IFrame Receiver</div>
+    <div class="btn-group">
+        <button onclick="resetCookie()">Reset Cookie</button>
+        <button onclick="saveCookie()">Save Cookie</button>
+        <button onclick="readCookie()">Read Cookie</button>
+        <button onclick="testError()">Error Message</button>
+    </div>
+    <textarea id="output" rows="40" cols="100">
+        receiver ready...
+    </textarea>
+</body>
+
+</html>
