@@ -38,8 +38,12 @@
             results.innerHTML = e;
             console.log("child sent", e.origin)
             console.log("parent", parent)
-            console.log("origin window", e.origin.window)            
-            console.log("event origin parent", e.parent)
+            
+            console.log("event window", e.window)            
+            console.log("event origin", e.origin)            
+            console.log("event origin parent", e.parent)            
+            console.log("event origin window", e.origin.window)            
+            
             console.log("test1:", e.origin.window == parent)            
             console.log("test2", e.window == parent)            
             console.log("test3", event.window == parent)
