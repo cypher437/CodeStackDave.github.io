@@ -37,9 +37,14 @@
         bindEvent(window, 'message', function (e) {
             results.innerHTML = e;
             console.log("child sent", e.origin)
-            console.log(e.window, parent)
-            console.log(e.window == parent)            
+            console.log("parent", parent)
+            console.log("origin window", e.origin.window)            
+            console.log("event origin parent", e.parent)
+            console.log("test1:", e.origin.window == parent)            
+            console.log("test2", e.window == parent)            
+            console.log("test3", event.window == parent)
             console.log("window", window.origin)
+            console.log("window parent", window.parent)
             console.log("parent", window.parent.origin)
         });
         // Send random message data on every button click
