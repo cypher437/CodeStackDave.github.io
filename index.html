@@ -37,6 +37,8 @@
         bindEvent(window, 'message', function (e) {
             results.innerHTML = e;
             console.log("child sent", e.origin)
+            console.log(e.window, parent)
+            console.log(e.window == parent)            
             console.log("window", window.origin)
             console.log("parent", window.parent.origin)
         });
